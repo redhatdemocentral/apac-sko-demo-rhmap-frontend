@@ -1,0 +1,253 @@
+<section id="query" ng-hide="queryPage">
+    <div id="formWrapper" class="panel panel-default">
+        <div class="panel-body">
+        <h4>TRAVEL BOOKING</h4>
+                <!---->
+           <input type="text" id="travelName" class="form-control" ng-model="traveller" placeholder="Enter your Name"/>
+           <select class="form-control" id="travelOrigin" ng-model="travelOrigin" value="EZE">
+            <option value="EZE">Seoul</option>
+            <option value="GRU">Tokyo</option>
+            <option value="SCL">Mumbai</option>
+            <option value="BOG">Sydney</option>
+            <option value="MEX">Auckland</option>
+            <option value="SIN" selected>Singapore</option>
+            <option value="PEK">Beijing</option>
+<!--
+            <option value="EZE" selected>Buenos Aires</option>
+            <option value="GRU">Sao Paulo</option>
+            <option value="SCL">Santiago</option>
+            <option value="BOG">Bogotá</option>
+            <option value="MEX">México DF</option>
+-->
+          </select>
+          <select class="form-control" id="travelDestination" ng-model="travelDestination" value="GRU">
+
+
+
+            <option value="EZE" selected>Seoul</option>
+            <option value="GRU">Tokyo</option>
+            <option value="SCL">Mumbai</option>
+            <option value="BOG">Sydney</option>
+            <option value="MEX">Auckland</option>
+            <option value="SIN">Singapore</option>
+            <option value="PEK">Beijing</option>
+
+
+<!--
+            <option value="EZE">Buenos Aires</option>
+            <option value="GRU" selected>Sao Paulo</option>
+            <option value="SCL">Santiago</option>
+            <option value="BOG">Bogotá</option>
+            <option value="MEX">México DF</option>
+-->            
+          </select>
+          <input type="date" class="form-control" ng-model="travelDate" placeholder="Enter travel date." value="2017-01-01">
+          <input type="number" class="form-control" ng-model="travelPassengers" placeholder="No. of Passengers" value=2>
+          <input type="number" class="form-control" ng-model="travelDays" placeholder="No. of Days" value=6>
+          <br>
+          <br>
+          <p>Book:</p>
+          <input type="checkbox" class="checkbox-inline" ng-model="travelBookFlight" value="false"> Flight
+          <input type="checkbox"class="checkbox-inline" ng-model="travelBookHotel" value="false"> Hotel
+          <input type="checkbox" class="checkbox-inline"  ng-model="travelBookCar" value="false"> Car
+          
+          <br>
+          <br>
+          <button type="button" class="btn btn-primary btn-block" ng-click="search()">Search</button>
+        </div>
+    </div>
+</section>
+
+<!-- Results Page -->
+<section id="results" ng-hide="resultsPage">
+  <div id="flightResults" class="panel panel-default" ng-hide="!travelBookFlight">
+    <div class="panel-heading">
+      <h4 class="panel-title">Flights</h4>
+    </div>
+    <div class="panel-body">
+      <table id="flightsTable" class="table-striped table-condensed">
+        <thead>
+          <tr>
+            <th>Selection</th>
+            <th>Flight No</th>
+            <th>Departure Time</th>
+            <th>Arrival Time</th>
+          </tr>
+        </thead>
+        <tr ng-repeat="f in flightRecordsMatch">
+          <td><input type="radio" ng-model="$parent.flightSel" name="flightSel" value={{$index}} id="flightSel{{$index}}" title="" /></td>
+           <td>{{ f.flightNo }}</td>
+          <td>{{ f.flightDepTime }}</td>
+          <td>{{ f.flightArrTime }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div id="hotelResults" class="panel panel-default"  ng-hide="!travelBookHotel">
+    <div class="panel-heading">
+      <h4 class="panel-title">Hotels</h4>
+    </div>
+    <div class="panel-body">
+      <table id="hotelTable" class="table-striped table-condensed">
+        <thead>
+          <tr>
+            <th>Selection</th>
+            <th>Hotel Chain</th>
+            <th>Hotel Name</th>
+            <th>Hotel Stars</th>
+          </tr>
+        </thead>
+        <tr ng-repeat="h in hotelRecordsMatch">
+          <td><input type="radio" ng-model="$parent.hotelSel" name="hotelSel" value={{$index}} id="hotelSel{{$index}}" title="" /></td>
+           <td>{{ h.hotelChain }}</td>
+          <td>{{ h.hotelName }}</td>
+          <td>{{ h.hotelStars }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div id="carResults" class="panel panel-default"  ng-hide="!travelBookCar">
+    <div class="panel-heading">
+      <h4 class="panel-title">Cars</h4>
+    </div>
+    <div class="panel-body">
+      <table id="carTable" class="table-striped table-condensed">
+        <thead>
+          <tr>
+            <th>Selection</th>
+            <th>Rental Company</th>
+            <th>Car Type</th>
+          </tr>
+        </thead>
+        <tr ng-repeat="c in carRecordsMatch">
+          <td><input type="radio" ng-model="$parent.carSel" name="carSel" value={{$index}} id="carSel{{$index}}" title="" /></td>
+           <td>{{ c.rentalCompany }}</td>
+          <td>{{ c.carType }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <button type="button" class="btn btn-primary btn-block" ng-click="bookTravel()">Book</button>
+  <button type="button" class="btn btn-primary btn-block" ng-click="backToQuery()">Go Back</button>
+</section>
+
+<!-- Quote Page -->
+<section id="quote" ng-hide="quotePage">
+  <div id="quotePagePanel" class="panel panel-default" >
+    <div class="panel-heading">
+      <h4 class="panel-title">Booking by {{travellerResp}}</h4>
+    </div>
+    <div class="panel-body">
+      <div id="flightQuote" class="panel panel-default" ng-hide="!travelBookFlight">
+        <div class="panel-heading" style="background-color:#004153">
+          <h4 class="panel-title" style="color:white">Flight</h4>
+        </div>
+        <table class="table-striped table-condensed">
+          <tr>
+            <th>Flight Number:</th>
+            <td>{{flightResp.flightNo}}</td>
+          </tr>
+          <tr>
+            <th>Date:</th>
+            <td>{{flightResp.flightDate}}</td>
+          </tr>
+          <tr>
+            <th>Passengers:</th>
+            <td>{{flightResp.flightPassengers}}</td>
+          </tr>
+          <tr>
+            <th>Origin:</th>
+            <td>{{flightResp.flightFrom}}</td>
+          </tr>
+          <tr>
+            <th>Destination:</th>
+            <td>{{flightResp.flightTo}}</td>
+          </tr>
+          <tr>
+            <th>Reservation Code:</th>
+            <td>{{flightResp.flightResCode}}</td>
+          </tr>
+          <tr>
+            <th>Reservation Status:</th>
+            <td>{{flightResp.flightResStatus}}</td>
+          </tr>
+          <tr>
+            <th>Price:</th>
+            <td>${{flightResp.flightPrice.toFixed(2)}}</td>
+          </tr>
+          <tr>
+            <th>Price with discount: ({{flightResp.flightDisc}}%)</th>
+            <td style="font-weight: bold">${{(flightResp.flightPrice* (1-(flightResp.flightDisc)/100)).toFixed(2)}}</td>
+          </tr>
+        </table>
+      </div>
+      <div id="hotelQuote" class="panel panel-default" ng-hide="!travelBookHotel">
+       <div class="panel-heading" style="background-color:#004153">
+          <h4 class="panel-title" style="color:white">Hotel</h4>
+        </div>
+        <table class="table-striped table-condensed">
+            <tr>
+              <th>Hotel ID:</th>
+              <td>{{hotelResp.hotelId}}</td>
+            </tr>
+            <tr>
+              <th>Arrival Date:</th>
+              <td>{{hotelResp.hotelArrivalDate}}</td>
+            </tr>
+            <tr>
+              <th>Nights:</th>
+              <td>{{hotelResp.hotelNights}}</td>
+            </tr>
+            <tr>
+              <th>Reservation Code:</th>
+              <td>{{hotelResp.hotelResCode}}</td>
+            </tr>
+            <tr>
+              <th>Reservation Status:</th>
+              <td>{{hotelResp.hotelResStatus}}</td>
+            </tr>
+            <tr>
+              <th>Price:</th>
+              <td>${{hotelResp.hotelPrice.toFixed(2)}}</td>
+            </tr>
+            <tr>
+              <th>Price with discount: ({{hotelResp.hotelDisc}}%)</th>
+              <td style="font-weight: bold">${{(hotelResp.hotelPrice* (1-(hotelResp.hotelDisc)/100)).toFixed(2)}}</td>
+            </tr>
+        </table>
+      </div>
+      <div id="carQuote" class="panel panel-default" ng-hide="!travelBookCar">
+       <div class="panel-heading" style="background-color:#004153">
+          <h4 class="panel-title" style="color:white">Car</h4>
+        </div>
+        <table class="table-striped table-condensed">
+            <tr>
+              <th>Rental Company:</th>
+              <td>{{carResp.carRentalCo}}</td>
+            </tr>
+            <tr>
+              <th>Car Type:</th>
+              <td>{{carResp.carType}}</td>
+            </tr>
+            <tr>
+              <th>Reservation Code</th>
+              <td>{{carResp.carResCode}}</td>
+            </tr>
+             <tr>
+              <th>Reservation Status</th>
+              <td>{{carResp.carResStatus}}</td>
+            </tr>
+             <tr>
+              <th>Price:</th>
+              <td>${{carResp.carPrice.toFixed(2)}}</td>
+            </tr>
+            <tr>
+              <th>Price with discount: ({{carResp.carDisc}}%)</th>
+              <td style="font-weight: bold">${{(carResp.carPrice* (1-(carResp.carDisc)/100)).toFixed(2)}}</td>
+            </tr>
+        </table>
+      </div>
+      <button type="button" class="btn btn-primary btn-block" ng-click="backToResults()">Go Back</button>
+    </div>
+  </div>
+</section>
