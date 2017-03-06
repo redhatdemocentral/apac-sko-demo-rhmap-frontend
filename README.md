@@ -1,7 +1,14 @@
-## FeedHenry 3 Studio
-### QuickStart AngularJS Client-side Template 
-==================================================================================================================
+APAC SKO FY18 Sample Mobile App 
+================================
+This is a sample 'Red Hat Travel App' used for the AppDev SA breakout track.
+It integrates with the services deployed on  OpenShift Container Platform in this [demo](https://github.com/redhatdemocentral/ocp-install-demo)
 
-This repo is basic HTML5/ AngularJS Hybrid client side template for projects developed on the FeedHenry 3 Studio.
-Visit [FeedHenry](http://www.feedhenry.com) Cloud Platform for more information on developing HTML5 apps with the 
-FeedHenry Studio.
+You will need to have access to Red Hat Mobile Application Platform to run this app.
+
+To import this application into Red Hat MAP, follow the instructions [here] (https://access.redhat.com/documentation/en-us/red_hat_mobile_application_platform_hosted/3/html/server-side_developer_guide/importing-client-apps-and-cloud-apps-into-projects)
+
+The accompany Cloud App backend can be downloaded [here](https://github.com/redhatdemocentral/apac-sko-demo-rhmap-cloudapp)
+
+
+
+
