@@ -1,3 +1,6 @@
+Update: June 2018 moved to [Gitlab](https://gitlab.com/redhatdemocentral/apac-sko-demo-rhmap-frontend).
+
+
 APAC SKO FY18 Sample Mobile App 
 ================================
 This is a sample 'Red Hat Travel App' used for the AppDev SA breakout track.
